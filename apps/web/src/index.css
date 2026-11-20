@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --bg-obsidian: #18181B;
+  --bg-canvas: #ECECEE;
+  --bg-surface: #FFFFFF;
+  --border-hairline: #E4E4E7;
+  --accent-lime: #D4F358;
+  --accent-periwinkle: #B4ACF9;
+  --accent-lavender: #E0DCFC;
+  --text-primary: #111827;
+  --text-secondary: #71717A;
+  --text-on-dark: #FAFAFA;
+  --status-danger: #F43F5E;
+  --status-safe: #10B981;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-obsidian);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+html[lang="bn"] body {
+  font-family: 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.font-mono-crypto {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom subtle scrollbars for code/dump panels */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(113, 113, 122, 0.35);
+  border-radius: 9999px;
+}

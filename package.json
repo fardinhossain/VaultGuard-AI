@@ -1,0 +1,29 @@
+{
+  "name": "vaultguard-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VaultGuard AI — Privacy-First Customer Data Protection Infrastructure & Explainable AI Security Sentinel",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build:packages": "npm run build --workspace=@vaultguard/crypto-core && npm run build --workspace=@vaultguard/node",
+    "build": "npm run build:packages && npm run build --workspace=@vaultguard/api && npm run build --workspace=@vaultguard/web",
+    "test": "npm test --workspace=@vaultguard/crypto-core",
+    "typecheck": "npm run typecheck --workspace=@vaultguard/crypto-core && npm run typecheck --workspace=@vaultguard/node && npm run typecheck --workspace=@vaultguard/api && npm run typecheck --workspace=@vaultguard/web",
+    "dev:api": "npm run dev --workspace=@vaultguard/api",
+    "dev:web": "npm run dev --workspace=@vaultguard/web",
+    "dev": "concurrently -n API,WEB -c cyan,green \"npm run dev:api\" \"npm run dev:web\"",
+    "demo:sdk": "tsx packages/node-sdk/examples/ecommerce-checkout.ts",
+    "demo:external-db": "tsx packages/node-sdk/examples/supershop-own-db.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  }
+}
