@@ -585,10 +585,10 @@ curl -X POST http://localhost:4000/v1/crypto/encrypt \\
           <div className="pt-1">
             <button
               type="button"
-              onClick={() => navigate('/playground')}
+              onClick={() => navigate('/simulator')}
               className="px-5 py-2 rounded-full bg-[#27272A] hover:bg-[#323238] text-white text-[13px] font-medium transition-colors border border-white/10 cursor-pointer"
             >
-              Open Live Store Simulator
+              Open Live SuperShop Simulator
             </button>
           </div>
         </div>
@@ -653,18 +653,18 @@ curl -X POST http://localhost:4000/v1/crypto/encrypt \\
                   {[
                     {
                       id: 'admin' as ActorRole,
-                      title: 'Admin (Full Protection)',
-                      desc: 'Can encrypt, blind-index, and decrypt customer records with full audit log.',
+                      title: 'Checkout Backend Key (Admin Scope)',
+                      desc: 'Can encrypt & decrypt everything (name, phone, email, address, orderTotal).',
                     },
                     {
-                      id: 'staff_audit' as ActorRole,
-                      title: 'Staff / Dispatcher',
-                      desc: 'Can search via blind-index and decrypt shipping addresses only.',
+                      id: 'delivery' as ActorRole,
+                      title: 'Delivery Rider App Key (Delivery Scope)',
+                      desc: 'Can only decrypt Name, Phone, and Address — Order Total and Email are hidden ([REDACTED_BY_POLICY]).',
                     },
                     {
-                      id: 'app_readonly' as ActorRole,
-                      title: 'App / Analytics (Zero Plaintext)',
-                      desc: 'Can only query blind-indexes; strictly blocked from revealing raw PII.',
+                      id: 'marketing' as ActorRole,
+                      title: 'Marketing / BI Analytics Key (Marketing Scope)',
+                      desc: 'Can only query blind-indexes; strictly blocked from decrypting raw PII.',
                     },
                   ].map((r) => (
                     <label

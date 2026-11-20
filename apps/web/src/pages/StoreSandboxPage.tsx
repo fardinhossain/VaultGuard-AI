@@ -310,18 +310,28 @@ export const StoreSandboxPage: React.FC = () => {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-[28px] font-semibold tracking-tight text-[#111827]">
-          {t('store.title')}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18181B] text-[#D4F358] text-[11px] font-bold uppercase tracking-wider mb-2">
+          WORKABLE MVP · EXTERNAL SUPERSHOP DATABASE SIMULATOR
+        </div>
+        <h1 className="text-[28px] font-bold tracking-tight text-[#111827]">
+          SuperShop Zero-Storage Encryption Simulator
         </h1>
-        <p className="text-[13.5px] text-[#71717A] mt-1">{t('store.subtitle')}</p>
+        <p className="text-[13.5px] text-[#71717A] mt-1">
+          Test the complete 4-step workflow live: generate a scoped key, place a customer order,
+          inspect what a hacker sees inside the SuperShop&apos;s own database, search by phone
+          number, and test role-based decryption.
+        </p>
       </div>
 
-      {/* Top API Key Connector Bar */}
+      {/* STEP 1: Top API Key Connector Bar */}
       <section className="bg-white rounded-[24px] border border-[#E4E4E7] p-5 space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2.5">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#18181B] text-[#D4F358] font-mono text-[11px] font-bold">
+              STEP 1
+            </span>
             <span className="text-[13px] font-semibold text-[#111827]">
-              Store Encryption Mode:
+              Store API Key & Encryption Mode:
             </span>
             <div className="inline-flex bg-[#ECECEE] p-1 rounded-full">
               <button
@@ -333,7 +343,7 @@ export const StoreSandboxPage: React.FC = () => {
                     : 'text-[#71717A] hover:text-[#111827]'
                 }`}
               >
-                Test Without API Key (Plaintext)
+                Without API Key (Plaintext)
               </button>
               <button
                 type="button"
@@ -344,13 +354,15 @@ export const StoreSandboxPage: React.FC = () => {
                     : 'text-[#71717A] hover:text-[#111827]'
                 }`}
               >
-                Encrypt With API Key
+                Encrypt With VaultGuard Key
               </button>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[12px] text-[#71717A]">Quick Create Test Key:</span>
+            <span className="text-[12px] font-semibold text-[#71717A]">
+              One-Click Plug Scoped Key:
+            </span>
             {(['admin', 'delivery', 'marketing'] as ActorRole[]).map((scope) => (
               <button
                 key={scope}
@@ -434,10 +446,17 @@ export const StoreSandboxPage: React.FC = () => {
                   <ShoppingBag className="w-4.5 h-4.5" />
                 </div>
                 <div>
-                  <h2 className="text-[16px] font-semibold text-[#111827]">
-                    SuperShop BD Checkout
-                  </h2>
-                  <p className="text-[11.5px] text-[#71717A]">Simulated external merchant app</p>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded-full bg-[#18181B] text-[#D4F358] font-mono text-[10px] font-bold">
+                      STEP 2
+                    </span>
+                    <h2 className="text-[16px] font-semibold text-[#111827]">
+                      SuperShop Checkout (POST /v1/crypto/encrypt)
+                    </h2>
+                  </div>
+                  <p className="text-[11.5px] text-[#71717A] mt-0.5">
+                    Encrypts customer PII before saving to the SuperShop&apos;s own database
+                  </p>
                 </div>
               </div>
 
@@ -545,11 +564,16 @@ export const StoreSandboxPage: React.FC = () => {
             </form>
           </section>
 
-          {/* Search inside Merchant's Own DB via Blind Index */}
+          {/* STEP 3: Search inside Merchant's Own DB via Blind Index */}
           <section className="bg-white rounded-[24px] border border-[#E4E4E7] p-5 space-y-3">
-            <h3 className="text-[14.5px] font-semibold text-[#111827]">
-              Search Encrypted Store DB by Phone
-            </h3>
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded-full bg-[#18181B] text-[#D4F358] font-mono text-[10px] font-bold">
+                STEP 3
+              </span>
+              <h3 className="text-[14.5px] font-semibold text-[#111827]">
+                Search Encrypted Store DB by Phone (POST /v1/crypto/blind-index)
+              </h3>
+            </div>
             <form onSubmit={handleStoreSearch} className="flex gap-2">
               <div className="relative flex-1">
                 <Search className="w-4 h-4 text-[#71717A] absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -587,17 +611,22 @@ export const StoreSandboxPage: React.FC = () => {
           </section>
         </div>
 
-        {/* Right: Live "SuperShop's Own Database" Hacker View */}
+        {/* STEP 4: Right: Live "SuperShop's Own Database" Hacker View */}
         <section className="lg:col-span-7 bg-white rounded-[24px] border border-[#E4E4E7] p-6 flex flex-col">
           <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
             <div className="flex items-center gap-2.5">
               <Database className="w-5 h-5 text-[#111827]" />
               <div>
-                <h2 className="text-[16px] font-semibold text-[#111827]">
-                  SuperShop’s Own Database (<code>db.merchant_orders</code>)
-                </h2>
-                <p className="text-[12px] text-[#71717A]">
-                  What a hacker sees if they breach this e-commerce platform’s database
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded-full bg-[#18181B] text-[#D4F358] font-mono text-[10px] font-bold">
+                    STEP 4
+                  </span>
+                  <h2 className="text-[16px] font-semibold text-[#111827]">
+                    SuperShop’s Own Database (<code>db.merchant_orders</code>) & Role Decryption
+                  </h2>
+                </div>
+                <p className="text-[12px] text-[#71717A] mt-0.5">
+                  What a hacker sees on DB breach vs. what authorized Admin / Delivery keys can decrypt
                 </p>
               </div>
             </div>

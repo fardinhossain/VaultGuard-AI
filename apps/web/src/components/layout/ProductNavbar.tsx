@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, Database, Menu, X } from 'lucide-react';
 import { useI18n } from '../../context/I18nContext';
 import { MerchantAuthButtons } from '../../context/AuthContext';
 
@@ -34,8 +34,8 @@ export const ProductNavbar: React.FC = () => {
           <span className="font-semibold tracking-tight text-white text-[19px]">vaultguard</span>
         </Link>
 
-        {/* Clean 5-Link Commercial Product Navbar */}
-        <nav className="hidden md:flex items-center gap-1" aria-label="Main Product Navigation">
+        {/* Clean Commercial Product Navbar */}
+        <nav className="hidden lg:flex items-center gap-1" aria-label="Main Product Navigation">
           <NavLink
             to="/"
             end
@@ -50,16 +50,16 @@ export const ProductNavbar: React.FC = () => {
             {t('nav.home')}
           </NavLink>
           <Link
+            to="/#how-it-works"
+            className="px-3.5 py-1.5 rounded-full text-[13px] font-medium text-[#A1A1AA] hover:text-white hover:bg-white/5 transition-colors whitespace-nowrap"
+          >
+            4-Step Workflow
+          </Link>
+          <Link
             to="/#features"
             className="px-3.5 py-1.5 rounded-full text-[13px] font-medium text-[#A1A1AA] hover:text-white hover:bg-white/5 transition-colors whitespace-nowrap"
           >
             {t('nav.features')}
-          </Link>
-          <Link
-            to="/#how-it-works"
-            className="px-3.5 py-1.5 rounded-full text-[13px] font-medium text-[#A1A1AA] hover:text-white hover:bg-white/5 transition-colors whitespace-nowrap"
-          >
-            {t('nav.howItWorks')}
           </Link>
           <NavLink
             to="/pricing"
@@ -84,6 +84,19 @@ export const ProductNavbar: React.FC = () => {
             }
           >
             {t('nav.docs')}
+          </NavLink>
+          <NavLink
+            to="/simulator"
+            className={({ isActive }) =>
+              `px-3.5 py-1.5 rounded-full text-[13px] font-medium transition-colors whitespace-nowrap inline-flex items-center gap-1.5 ${
+                isActive
+                  ? 'bg-white/15 text-[#D4F358] font-semibold'
+                  : 'text-[#A1A1AA] hover:text-white hover:bg-white/5'
+              }`
+            }
+          >
+            <Database className="w-3.5 h-3.5 text-[#D4F358]" />
+            SuperShop Simulator
           </NavLink>
         </nav>
 
@@ -115,13 +128,6 @@ export const ProductNavbar: React.FC = () => {
           </div>
 
           <Link
-            to="/dashboard"
-            className="hidden sm:inline-flex items-center px-3.5 py-2 rounded-full bg-[#27272A] hover:bg-[#3F3F46] text-white text-[12.5px] font-semibold transition-colors whitespace-nowrap"
-          >
-            {t('nav.portal')}
-          </Link>
-
-          <Link
             to="/api-keys"
             className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#D4F358] hover:bg-[#c5e642] text-[#18181B] text-[12.5px] font-bold transition-colors whitespace-nowrap"
           >
@@ -132,7 +138,7 @@ export const ProductNavbar: React.FC = () => {
           <button
             type="button"
             onClick={() => setMobileOpen((o) => !o)}
-            className="md:hidden p-2 rounded-full bg-[#27272A] text-white"
+            className="lg:hidden p-2 rounded-full bg-[#27272A] text-white"
             aria-label="Toggle product menu"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -142,7 +148,7 @@ export const ProductNavbar: React.FC = () => {
 
       {/* Mobile Dropdown Navigation */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-white/10 bg-[#18181B] px-4 py-4 space-y-1.5">
+        <div className="lg:hidden border-t border-white/10 bg-[#18181B] px-4 py-4 space-y-1.5">
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
@@ -151,18 +157,18 @@ export const ProductNavbar: React.FC = () => {
             {t('nav.home')}
           </Link>
           <Link
+            to="/#how-it-works"
+            onClick={() => setMobileOpen(false)}
+            className="block px-4 py-2.5 rounded-full text-[13.5px] font-medium text-[#A1A1AA]"
+          >
+            4-Step Workflow
+          </Link>
+          <Link
             to="/#features"
             onClick={() => setMobileOpen(false)}
             className="block px-4 py-2.5 rounded-full text-[13.5px] font-medium text-[#A1A1AA]"
           >
             {t('nav.features')}
-          </Link>
-          <Link
-            to="/#how-it-works"
-            onClick={() => setMobileOpen(false)}
-            className="block px-4 py-2.5 rounded-full text-[13.5px] font-medium text-[#A1A1AA]"
-          >
-            {t('nav.howItWorks')}
           </Link>
           <Link
             to="/pricing"
@@ -177,6 +183,13 @@ export const ProductNavbar: React.FC = () => {
             className="block px-4 py-2.5 rounded-full text-[13.5px] font-medium text-[#A1A1AA]"
           >
             {t('nav.docs')}
+          </Link>
+          <Link
+            to="/simulator"
+            onClick={() => setMobileOpen(false)}
+            className="block px-4 py-2.5 rounded-full text-[13.5px] font-medium text-[#D4F358]"
+          >
+            SuperShop Simulator
           </Link>
           <div className="pt-2 flex flex-col gap-2">
             <MerchantAuthButtons className="w-full justify-between" />

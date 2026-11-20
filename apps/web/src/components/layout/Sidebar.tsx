@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
   Activity,
@@ -6,20 +6,17 @@ import {
   BarChart2,
   Bell,
   CreditCard,
+  Database,
   ExternalLink,
   FileCheck2,
-  FolderTree,
   Gauge,
-  KeyRound,
   RotateCw,
   Search,
   Settings,
-  ShieldAlert,
   Terminal,
   X,
 } from 'lucide-react';
 import { useMerchantAuth } from '../../context/AuthContext';
-import { useI18n, TranslationKey } from '../../context/I18nContext';
 import { useWorkspace } from '../../context/WorkspaceContext';
 
 interface SidebarProps {
@@ -28,13 +25,12 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) => {
-  const { t } = useI18n();
-  const { currentUser, isConfigured, openConfigModal } = useMerchantAuth();
+  const { currentUser, openConfigModal } = useMerchantAuth();
   const { summary, activeTenant, rotatingKey, rotateKekNow, showToast } = useWorkspace();
-  const [activeTool, setActiveTool] = useState<string | null>(null);
 
   const keyVersion = summary?.activeKeyVersion ?? activeTenant?.activeKeyVersion ?? 1;
   const activeKeyCount = summary?.activeApiKeysCount ?? 0;
+  const extProtectedCount = summary?.externalProtectedOrdersCount ?? 0;
   const planTier = (summary?.plan?.tier ?? activeTenant?.planTier ?? 'free').toUpperCase();
 
   const sections: Array<{
@@ -50,28 +46,33 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
       groupTitle: 'PROJECT',
       items: [
         { to: '/api-keys', label: 'API Keys', icon: Terminal, badge: activeKeyCount },
-        { to: '/playground', label: 'Projects & Stores', icon: FolderTree, badge: activeTenant?.name.split(' ')[0] },
+        {
+          to: '/simulator',
+          label: 'SuperShop DB Simulator',
+          icon: Database,
+          badge: extProtectedCount,
+        },
       ],
     },
     {
       groupTitle: 'USAGE & BILLING',
       items: [
-        { to: '/dashboard', label: 'Usage', icon: BarChart2 },
-        { to: '/sentinel', label: 'Rate Limit', icon: Gauge, badge: '500/min' },
+        { to: '/dashboard', label: 'Usage & Analytics', icon: BarChart2 },
+        { to: '/sentinel', label: 'AI Sentinel Guard', icon: Gauge, badge: '500/min' },
         { to: '/pricing', label: 'Billing & Plans', icon: CreditCard, badge: planTier },
       ],
     },
     {
       groupTitle: 'OBSERVE',
       items: [
-        { to: '/audit', label: 'Logs', icon: FileCheck2 },
-        { to: '/access', label: 'Access Control', icon: Activity },
+        { to: '/audit', label: 'Audit Logs', icon: FileCheck2 },
+        { to: '/access', label: 'Role Redaction Rules', icon: Activity },
       ],
     },
   ];
 
   const railContent = (
-    <div className="flex flex-col h-full w-[252px] px-3.5 py-4 text-[#FAFAFA] select-none overflow-y-auto">
+    <div className="flex flex-col h-full w-[256px] px-3.5 py-4 text-[#FAFAFA] select-none overflow-y-auto">
       {/* Top Header & Logo matching Google AI Studio style */}
       <div className="flex items-center justify-between px-2 mb-3">
         <Link to="/" onClick={onCloseMobile} className="flex items-center gap-2.5 group">
@@ -96,7 +97,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
           <div className="flex flex-col leading-none">
             <span className="font-semibold tracking-tight text-white text-[18px]">VaultGuard AI</span>
             <span className="text-[9.5px] uppercase tracking-[0.14em] text-[#A1A1AA] mt-0.5">
-              Console
+              Zero-Storage Console
             </span>
           </div>
         </Link>
@@ -111,7 +112,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
         </button>
       </div>
 
-      {/* Back to Public Website link matching "< Dashboard" */}
+      {/* Back to Public Website link */}
       <Link
         to="/"
         onClick={onCloseMobile}
@@ -179,7 +180,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
             onClick={onCloseMobile}
             className="flex items-center justify-between px-3 py-1.5 text-[12px] text-[#71717A] hover:text-white transition-colors"
           >
-            <span>Changelog</span>
+            <span>4-Step Integration Guide</span>
             <ExternalLink className="w-3.5 h-3.5 opacity-60" />
           </Link>
         </div>
@@ -192,7 +193,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
           <button
             type="button"
             title="Notifications"
-            onClick={() => showToast('info', 'Notifications', 'Zero security breaches detected across all store branches.')}
+            onClick={() =>
+              showToast(
+                'info',
+                'Zero-Storage Status',
+                '0 customer records stored on VaultGuard servers. All keys active.',
+              )
+            }
             className="p-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
             <Bell className="w-4 h-4" />
@@ -208,7 +215,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
           <button
             type="button"
             title="Search Orders by Blind Index"
-            onClick={() => showToast('info', 'Search', 'Use the Blind Index search in Playground to locate customer orders.')}
+            onClick={() =>
+              showToast(
+                'info',
+                'Blind-Index Search',
+                'Open SuperShop DB Simulator to test sub-millisecond phone lookup.',
+              )
+            }
             className="p-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
             <Search className="w-4 h-4" />
@@ -245,9 +258,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
             <p className="text-[12px] font-medium text-white truncate group-hover:text-[#D4F358] transition-colors">
               {currentUser.email}
             </p>
-            <p className="text-[10px] text-[#71717A] truncate">
-              {currentUser.storeName}
-            </p>
+            <p className="text-[10px] text-[#71717A] truncate">{currentUser.storeName}</p>
           </div>
         </button>
       </div>

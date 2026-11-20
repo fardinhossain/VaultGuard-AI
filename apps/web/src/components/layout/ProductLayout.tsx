@@ -71,8 +71,8 @@ export const ProductLayout: React.FC<{ children: React.ReactNode }> = ({ childre
                 </Link>
               </li>
               <li>
-                <Link to="/playground" className="hover:text-white">
-                  API Encryption Playground
+                <Link to="/simulator" className="hover:text-white">
+                  SuperShop DB Simulator
                 </Link>
               </li>
               <li>
